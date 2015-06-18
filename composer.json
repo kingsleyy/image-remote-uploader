@@ -1,0 +1,20 @@
+{
+    "name": "kings/image-remote-uploader",
+    "description": "Remoting image uploader (to picasa, imgurl, ...)",
+    "require": {
+        "php": ">= 5.4",
+        "guzzle/guzzle": "^3.9@dev"
+    },
+    "autoload": {
+        "psr-0": {
+            "Kings": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Phuong Huynh",
+            "email": "phuonghuynh.net@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
