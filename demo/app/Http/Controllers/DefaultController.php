@@ -66,6 +66,8 @@ class DefaultController extends Controller
             }
         }
 
+        File::deleteDirectory($thisSessionDir);
+
         return Response::json($response);
     }
 
@@ -83,6 +85,7 @@ class DefaultController extends Controller
         $zip->open($file->getRealPath());
         $zip->extractTo($tmpDir);
         $images = $this->moveDirImages($tmpDir, $sessionDir);
+        File::deleteDirectory($tmpDir);
 
         return $images;
     }
@@ -110,6 +113,8 @@ class DefaultController extends Controller
                 $images[] = $this->processImages(realpath($entry), $sessionDir);
             }
         }
+
+        return $images;
     }
 
     /**
