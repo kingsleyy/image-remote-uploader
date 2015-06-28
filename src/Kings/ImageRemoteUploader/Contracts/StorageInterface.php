@@ -2,7 +2,7 @@
 namespace Kings\ImageRemoteUploader\Contracts;
 
 /**
- * Interface for storage bussiness (use store token)
+ * Interface for storage business (use store token)
  */
 interface StorageInterface
 {
