@@ -94,7 +94,7 @@ class Picasa extends AbstractUploader
         $headers['Content-Length'] = File::size($filepath);
         $headers['Slug'] = File::name($filepath);
 
-        $response = $client->post('https://picasaweb.google.com/data/feed/api/user/default/albumid/default?alt=json', [
+        $response = $client->post("https://picasaweb.google.com/data/feed/api/user/default/albumid/{$album}?alt=json", [
             'headers' => $headers,
             'body' => fopen($filepath, 'r'),
         ]);

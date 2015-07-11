@@ -27,6 +27,8 @@ class DefaultController extends Controller
 
     public function postDoUpload(Request $request)
     {
+        set_time_limit(30 * 1000);
+
         $files = $request->file('files');
         $totalUploadedFiles = count($files);
         $tmpDir = public_path('upload/tmp');
@@ -53,22 +55,33 @@ class DefaultController extends Controller
             $imagesForUpload = array_merge($imagesForUpload, $tmpImages);
         }
 
+
+        $album = $this->albumRepo->choseAlbum(count($imagesForUpload), 'otk', $this->picasa);
         // Process upload to picasa ...
         foreach ($imagesForUpload as $image) {
-            try {
-                $filepath = public_path($relativePath . '/' . $image);
-                $url = $this->picasa->doUpload($filepath);
+            $filepath = public_path($relativePath . '/' . $image);
+            $url = $this->doPicasaUpload($filepath, $album->g_id);
+            if ($url) {
                 $response['files'][] = [
                     'url' => $url,
                 ];
-            } catch (\Exception $e) {
-                \Log::debug($e);
             }
         }
 
         File::deleteDirectory($thisSessionDir);
 
         return Response::json($response);
+    }
+
+    protected function doPicasaUpload($filepath, $album)
+    {
+        try {
+            $url = $this->picasa->doUpload($filepath, $album);
+            return $url;
+        } catch (\Exception $e) {
+            \Log::debug('Fail upload file: ' . $filepath);
+            return null;
+        }
     }
 
     /**

@@ -1,5 +1,9 @@
 <?php
 
+use App\Storage\DatabaseStorage;
+use Kings\ImageRemoteUploader\Contracts\StorageInterface;
+use Kings\ImageRemoteUploader\Uploaders\Picasa;
+
 class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
     /**
@@ -7,7 +11,12 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      *
      * @var string
      */
-    protected $baseUrl = 'http://localhost';
+    protected $baseUrl = 'http://image-uploader.dev';
+
+    /**
+     * @var Picasa
+     */
+    protected $picasa;
 
     /**
      * Creates the application.
@@ -19,6 +28,8 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
         $app = require __DIR__.'/../bootstrap/app.php';
 
         $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+
+        $this->picasa = App::make('PicasaUploader');
 
         return $app;
     }
