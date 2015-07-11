@@ -79,7 +79,8 @@ class DefaultController extends Controller
             $url = $this->picasa->doUpload($filepath, $album);
             return $url;
         } catch (\Exception $e) {
-            \Log::debug('Fail upload file: ' . $filepath);
+            \Log::debug('#1Fail upload file: ' . $filepath);
+            \Log::debug($e);
             return null;
         }
     }
