@@ -67,6 +67,8 @@ class DefaultController extends Controller
                 ];
             }
         }
+        $album->c_photo += count($imagesForUpload);
+        $album->save();
 
         File::deleteDirectory($thisSessionDir);
 
